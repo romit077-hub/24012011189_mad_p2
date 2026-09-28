@@ -90,8 +90,8 @@ The `@+id/` syntax creates a new resource ID.
 
 The TextView can then be accessed from code using:
 
-```java
-TextView textView = findViewById(R.id.textView);
+```kotlin
+val textView = findViewById<TextView>(R.id.textView)
 ```
 
 ---
@@ -172,33 +172,11 @@ Typical tasks include:
 - Initializing UI components
 - Initializing variables
 
-Example:
-
-```java
-@Override
-protected void onCreate(Bundle savedInstanceState) {
-    super.onCreate(savedInstanceState);
-
-    setContentView(R.layout.activity_main);
-
-    Log.d("ActivityLifecycle", "onCreate");
-}
-```
-
 ---
 
 ## 2. onStart()
 
 Called when the Activity becomes visible to the user.
-
-```java
-@Override
-protected void onStart() {
-    super.onStart();
-
-    Log.d("ActivityLifecycle", "onStart");
-}
-```
 
 ---
 
@@ -206,29 +184,11 @@ protected void onStart() {
 
 Called when the Activity enters the foreground and becomes interactive.
 
-```java
-@Override
-protected void onResume() {
-    super.onResume();
-
-    Log.d("ActivityLifecycle", "onResume");
-}
-```
-
 ---
 
 ## 4. onPause()
 
 Called when the Activity is partially obscured or is about to lose focus.
-
-```java
-@Override
-protected void onPause() {
-    super.onPause();
-
-    Log.d("ActivityLifecycle", "onPause");
-}
-```
 
 ---
 
@@ -236,102 +196,17 @@ protected void onPause() {
 
 Called when the Activity is no longer visible.
 
-```java
-@Override
-protected void onStop() {
-    super.onStop();
-
-    Log.d("ActivityLifecycle", "onStop");
-}
-```
-
 ---
 
 ## 6. onRestart()
 
 Called when a stopped Activity is about to start again.
 
-```java
-@Override
-protected void onRestart() {
-    super.onRestart();
-
-    Log.d("ActivityLifecycle", "onRestart");
-}
-```
-
 ---
 
 ## 7. onDestroy()
 
 Called when the Activity is being destroyed.
-
-```java
-@Override
-protected void onDestroy() {
-    super.onDestroy();
-
-    Log.d("ActivityLifecycle", "onDestroy");
-}
-```
-
----
-
-# 📝 Complete Lifecycle Logging Example
-
-The lifecycle methods can be overridden to print messages in Logcat:
-
-```java
-@Override
-protected void onCreate(Bundle savedInstanceState) {
-    super.onCreate(savedInstanceState);
-    setContentView(R.layout.activity_main);
-
-    Log.d("ActivityLifecycle", "onCreate");
-}
-
-@Override
-protected void onStart() {
-    super.onStart();
-
-    Log.d("ActivityLifecycle", "onStart");
-}
-
-@Override
-protected void onResume() {
-    super.onResume();
-
-    Log.d("ActivityLifecycle", "onResume");
-}
-
-@Override
-protected void onPause() {
-    super.onPause();
-
-    Log.d("ActivityLifecycle", "onPause");
-}
-
-@Override
-protected void onStop() {
-    super.onStop();
-
-    Log.d("ActivityLifecycle", "onStop");
-}
-
-@Override
-protected void onRestart() {
-    super.onRestart();
-
-    Log.d("ActivityLifecycle", "onRestart");
-}
-
-@Override
-protected void onDestroy() {
-    super.onDestroy();
-
-    Log.d("ActivityLifecycle", "onDestroy");
-}
-```
 
 ---
 
@@ -341,29 +216,8 @@ The `Log` class is used to print debugging information in Android Studio's **Log
 
 Example:
 
-```java
-Log.d("ActivityLifecycle", "onCreate");
-```
-
-Where:
-
-- `Log.d()` → Debug-level log
-- `"ActivityLifecycle"` → Tag
-- `"onCreate"` → Message
-
-Typical output:
-
-```text
-ActivityLifecycle: onCreate
-ActivityLifecycle: onStart
-ActivityLifecycle: onResume
-```
-
-When the Activity is stopped, additional lifecycle methods can appear:
-
-```text
-ActivityLifecycle: onPause
-ActivityLifecycle: onStop
+```kotlin
+Log.i("MainActivity", "onCreate function called.")
 ```
 
 ---
@@ -374,15 +228,9 @@ A **Toast** is a small temporary message displayed to the user.
 
 Example:
 
-```java
-Toast.makeText(
-        this,
-        "Activity Started",
-        Toast.LENGTH_SHORT
-).show();
+```kotlin
+Toast.makeText(this, message, Toast.LENGTH_SHORT).show()
 ```
-
-Toast messages are useful for providing short feedback without interrupting the user's interaction.
 
 ---
 
@@ -392,125 +240,9 @@ A **Snackbar** displays a brief message at the bottom of the screen.
 
 Example:
 
-```java
-Snackbar.make(
-        findViewById(android.R.id.content),
-        "Activity Resumed",
-        Snackbar.LENGTH_SHORT
-).show();
+```kotlin
+Snackbar.make(rootView, message, Snackbar.LENGTH_SHORT).show()
 ```
-
-Required import:
-
-```java
-import com.google.android.material.snackbar.Snackbar;
-```
-
-Unlike a Toast, a Snackbar is generally associated with a particular UI view and can also provide an optional action.
-
----
-
-# 🔬 Demonstrating Lifecycle with Messages
-
-The Activity can demonstrate lifecycle events using different messages.
-
-For example:
-
-```java
-@Override
-protected void onCreate(Bundle savedInstanceState) {
-    super.onCreate(savedInstanceState);
-    setContentView(R.layout.activity_main);
-
-    Log.d("ActivityLifecycle", "onCreate");
-
-    Toast.makeText(
-            this,
-            "onCreate Called",
-            Toast.LENGTH_SHORT
-    ).show();
-}
-```
-
-Another lifecycle method:
-
-```java
-@Override
-protected void onResume() {
-    super.onResume();
-
-    Log.d("ActivityLifecycle", "onResume");
-
-    Snackbar.make(
-            findViewById(android.R.id.content),
-            "onResume Called",
-            Snackbar.LENGTH_SHORT
-    ).show();
-}
-```
-
----
-
-# 🔁 Typical Lifecycle Flow
-
-### When the application is launched:
-
-```text
-onCreate()
-   ↓
-onStart()
-   ↓
-onResume()
-```
-
-### When another Activity/dialog comes in front:
-
-```text
-onPause()
-```
-
-### When the Activity becomes completely hidden:
-
-```text
-onStop()
-```
-
-### When returning to the Activity:
-
-```text
-onRestart()
-   ↓
-onStart()
-   ↓
-onResume()
-```
-
-### When the Activity is destroyed:
-
-```text
-onDestroy()
-```
-
-> The exact lifecycle sequence can vary depending on what the user does and how Android manages the Activity.
-
----
-
-# 📚 Study Topics
-
-This practical covers:
-
-- TextView
-- TextView properties
-- Toast Message
-- Snackbar Message
-- Android built-in resources
-- Activity Lifecycle
-- Log messages
-- Logcat
-- ConstraintLayout
-- ConstraintLayout properties
-- Generating IDs for UI components
-- Basic Android UI development
 
 ---
 
@@ -518,7 +250,7 @@ This practical covers:
 
 - **Platform:** Android
 - **IDE:** Android Studio
-- **Language:** Java / Kotlin
+- **Language:** Kotlin
 - **UI:** XML
 - **Layout:** ConstraintLayout
 - **Material Components:** Snackbar
@@ -526,204 +258,16 @@ This practical covers:
 
 ---
 
-# 📂 Suggested Project Structure
-
-```text
-ActivityLifecycleDemo/
-│
-├── app/
-│   └── src/
-│       └── main/
-│           ├── java/
-│           │   └── .../
-│           │       └── MainActivity.java
-│           │
-│           ├── res/
-│           │   ├── drawable/
-│           │   ├── layout/
-│           │   │   └── activity_main.xml
-│           │   └── values/
-│           │
-│           └── AndroidManifest.xml
-│
-└── README.md
-```
-
----
-
-# ▶️ How to Run
-
-### 1. Open the Project
-
-Open the project in **Android Studio**.
-
-### 2. Sync Gradle
-
-Allow Android Studio to finish Gradle synchronization.
-
-### 3. Start an Emulator or Connect a Device
-
-You can use:
-
-- Android Emulator
-- Physical Android device
-
-### 4. Run the Application
-
-Click:
-
-```text
-Run ▶
-```
-
-and select the target device.
-
----
-
-# 🔍 Viewing Lifecycle Logs
-
-To view the lifecycle messages:
-
-1. Run the application.
-2. Open **Logcat** in Android Studio.
-3. Search for:
-
-```text
-ActivityLifecycle
-```
-
-4. Observe lifecycle methods such as:
-
-```text
-onCreate
-onStart
-onResume
-onPause
-onStop
-onRestart
-onDestroy
-```
-
----
-
-# 🧪 Expected Output
-
-The application should display:
-
-```text
-┌──────────────────────────────────┐
-│                                  │
-│                                  │
-│          Hello World             │
-│                                  │
-│                                  │
-└──────────────────────────────────┘
-```
-
-The screen should have:
-
-- 🟨 Yellow background
-- 🔵 Holo Blue Bright text
-- **27sp** text size
-- **Bold + Italic** text
-- Centered TextView
-
-Lifecycle events should appear in Android Studio **Logcat**.
-
-Toast and Snackbar messages should also appear during the corresponding lifecycle events.
-
----
-
-# 🎓 Learning Outcomes
-
-After completing this practical, we understand:
-
-- How to create a basic Android UI
-- How to use `TextView`
-- How to modify TextView properties
-- How to create and use view IDs
-- How to use `ConstraintLayout`
-- How Android Activity Lifecycle works
-- The purpose of `onCreate()`
-- The purpose of `onStart()`
-- The purpose of `onResume()`
-- The purpose of `onPause()`
-- The purpose of `onStop()`
-- The purpose of `onRestart()`
-- The purpose of `onDestroy()`
-- How to generate Log messages
-- How to monitor lifecycle events using Logcat
-- How to display Toast messages
-- How to display Snackbar messages
-- How Android built-in resources can be used
-
----
-
-# 📸 Screenshots
-
-Add screenshots of your completed practical here.
-
-### Application UI
-
-```text
-Add your application screenshot here
-```
-
-### Logcat
-
-```text
-Add your Logcat screenshot here
-```
-
-### Snackbar
-
-```text
-Add your Snackbar screenshot here
-```
-
-### Toast
-
-```text
-Add your Toast screenshot here
-```
-
----
-
-# 📖 References
-
-- **Android TextView Documentation:**  
-  https://developer.android.com/guide/topics/ui/look-and-feel/autosizing-textview
-
-- **Android Activity Lifecycle:**  
-  https://developer.android.com/guide/components/activities/activity-lifecycle
-
-- **Android Logcat:**  
-  https://developer.android.com/studio/debug/am-logcat
-
-- **Android Toast Messages:**  
-  https://developer.android.com/guide/topics/ui/notifiers/toasts
-
-- **Android Snackbar:**  
-  https://developer.android.com/training/snackbar/showing
-
----
-
 # 👨‍💻 Practical Information
 
 **Subject:** Mobile Application Development (MAD)
 
-**Practical:** Activity Life Cycle & Basic UI
+**Practical:** Activity Life Cycle & Basic UI (MAD Practical 2)
 
-**University:** Ganpat University
-
-**Project Type:** Android Application
+**Enrollment No:** `24012011189`
 
 ---
 
 # ✅ Conclusion
 
 This practical successfully demonstrates the **Android Activity Lifecycle** along with basic Android UI development.
-
-A `TextView` is created and styled according to the given requirements, while Activity Lifecycle methods are monitored through **Logcat**. **Toast** and **Snackbar** messages are also used to demonstrate user feedback during Activity lifecycle events.
-
-This practical provides a foundation for understanding how Android Activities are created, displayed, paused, stopped, restarted, and destroyed.

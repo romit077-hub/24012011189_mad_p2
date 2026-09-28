@@ -1,4 +1,4 @@
-package com.example.mad_practical_2
+package com.example.a24012011189_mad_p2
 
 import android.os.Bundle
 import android.util.Log
